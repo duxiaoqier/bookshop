@@ -1,0 +1,203 @@
+a {
+	color: #0096f0;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #3cb4ff;
+	text-decoration: none;
+}
+
+select, textarea, input[type="text"], input[type="button"], input[type="password"]
+	{
+	border-radius: 2px;
+	padding: 5px;
+	border: 1px solid #c8c8be;
+	margin: 0 0 5px 0;
+}
+
+.button {
+	display: inline-block;
+	cursor: pointer;
+	color: #666;
+	background: #ddd;
+	margin: 0;
+	padding: 8px 20px;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 2px;
+}
+
+.button a {
+	color: #666;
+}
+
+.button a:hover {
+	color: #666;
+}
+
+.button:hover {
+	color: #666;
+	background: #eee;
+}
+
+.button-primary {
+	color: #FFF;
+	background: #333;
+}
+
+.button-primary a {
+	color: #FFF;
+}
+
+.button-primary a:hover {
+	color: #FFF;
+}
+
+.button-primary:hover {
+	color: #FFF;
+	background: #444;
+}
+
+.page {
+	height: 30px;
+	line-height: 30px;
+	float: right;
+}
+
+.page div {
+	float: left;
+	margin: 0 5px;
+}
+
+.page div span {
+	color: #FF2048;
+	padding: 0 5px;
+}
+
+.page div input[type='text'] {
+	padding: 3px;
+	width: 30px;
+}
+
+.page div input[type='button'] {
+	border: 0;
+	cursor: pointer;
+	background: #e4e4de;
+	color: #666;
+}
+
+.page div input[type='button']:hover {
+	background: #f0f0e6;
+	color: #666;
+}
+
+.page ul {
+	float: left;
+}
+
+.page ul li {
+	float: left;
+	margin: 0 2px;
+}
+
+.page ul li a {
+	display: inline-block;
+	border: 1px solid #d0d0d0;
+	color: #0096f0;
+	background: #fff;
+	text-align: center;
+	border-radius: 2px;
+	padding: 0 10px;
+}
+
+.page ul li a:hover {
+	color: #3cb4ff;
+}
+
+.page ul li span {
+	display: inline-block;
+	border: 1px solid #FF2048;
+	color: #FFF;
+	background: #FF2048;
+	text-align: center;
+	border-radius: 2px;
+	padding: 0 10px;
+}
+
+.tools-bar {
+	margin: 20px 0;
+	padding: 5px;
+	background: #f4f4f4;
+}
+
+.tools-bar a {
+	display: inline-block;
+	border: 1px solid #d0d0d0;
+	background: #fff;
+	color: #0096f0;
+	text-align: center;
+	border-radius: 2px;
+	padding: 5px 10px;
+}
+
+.tools-bar a:hover {
+	color: #3cb4ff;
+}
+
+.tools-bar a .tool-disable {
+	color: #ccc;
+}
+
+.font-failed {
+	color: #FF2048;
+}
+
+.font-success {
+	color: #11DAB7;
+}
+
+#chart-container {
+	padding: 10px 0;
+}
+
+.header {
+	height: 60px;
+	line-height: 60px;
+	width: 100%;
+	background: #2c2c2c;
+}
+
+.header-logo {
+	float: left;
+	height: 60px;
+}
+
+.header-title {
+	float: left;
+	color: #FFF;
+	font-size: 16px;
+}
+
+.header-nav {
+	float: left;
+	margin: 0 0 0 40px;
+}
+
+.header-nav ul li {
+	float: left;
+	background: #666;
+	padding: 0 40px;
+}
+
+.header-nav ul li a {
+	color: #FFF;
+}
+
+.header-nav ul li a:hover {
+	color: #eee;
+}
+
+.header-nav ul .header-nav-current {
+	background: #FF2048;
+}

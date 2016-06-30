@@ -1,0 +1,126 @@
+.main-panel {
+	position: relative;
+}
+
+.left-panel {
+	position: fixed;
+	left: 0;
+	top: 60px;
+	bottom: 0;
+	width: 200px;
+	border-right: 1px solid #ccc;
+}
+
+.right-panel {
+	margin: 0 0 0 200px;
+}
+
+.menu-bar {
+	background: #eee;
+	padding: 0 10px;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #ccc;
+}
+
+.menu-list li {
+	padding: 0 10px;
+	height: 35px;
+	line-height: 35px;
+	border-bottom: 1px solid #ccc;
+}
+
+.menu-list-current {
+	width: 176px;
+	background: #fff;
+	border-right: 5px solid #FF2048;
+}
+
+.nav {
+	height: 50px;
+	line-height: 50px;
+	border-bottom: 1px solid #ccc;
+	background: #eee;
+	padding: 0 20px;
+}
+
+.nav ul {
+	padding: 10px 0 0 0;
+}
+
+.nav ul li {
+	float: left;
+	padding: 0 20px;
+	height: 35px;
+	line-height: 35px;
+	border-top: 5px solid #eee;
+}
+
+.nav ul .nav_current {
+	height: 36px;
+	line-height: 36px;
+	background: #fff;
+	border-top: 5px solid #FF2048;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+}
+
+.detail {
+	padding: 0 10px;
+}
+
+.filter {
+	margin: 20px 0 10px 0;
+	padding: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+.table-list {
+	width: 100%;
+	margin: 10px 0;
+}
+
+.table-list tr:hover {
+	background: #f9f9f9;
+}
+
+.table-list th {
+	text-align: left;
+	padding: 10px;
+	background: #f4f4f4;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+}
+
+.table-list th {
+	font-weight: normal;
+}
+
+.table-list td {
+	text-align: left;
+	padding: 5px 10px;
+	border-top: 1px solid #ccc;
+	border-bottom: 1px solid #ccc;
+	word-break: break-all;
+	word-wrap: break-word;
+}
+
+.table-list td a:visited {
+	color: #a000dc;
+}
+
+.error-msg {
+	color: #FF2048;
+	padding: 0 10px;
+}
+
+.page-detail {
+	margin: 20px auto;
+	padding: 20px;
+	width: 1000px;
+	border: 1px solid #d0d0d0;
+}
+
+.page-detail h3 {
+	font-size: 16px;
+}
