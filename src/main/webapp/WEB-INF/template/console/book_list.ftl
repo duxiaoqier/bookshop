@@ -21,30 +21,16 @@
 		<div class="detail">
 	    	<fieldset class="filter">
 	    		<form id="form-search" action="book" method="get">
-		            <input type="text" name="bookId" value="${bookId!}" placeholder="请输入任务ID" style="width:200px">
-		            <input type="text" name="sourceId" value="${sourceId!}" placeholder="请输入任务源ID" style="width:200px">
+		            <input type="text" name="bookId" value="${bookId!}" placeholder="请输入图书ID" style="width:200px">
+		            <input type="text" name="name" value="${name!}" placeholder="请输入图书名称" style="width:200px">
 		            <select name="type">
 		            	<#if type == ''>
-		            		<option value="" selected="selected">请选择任务类型</option>
+		            		<option value="" selected="selected">请选择图书类型</option>
 		            	<#else>
-		            		<option value="">请选择任务类型</option>
+		            		<option value="">请选择图书类型</option>
 		            	</#if>
-		            	<#list enums["com.bimface.book.enums.bookType"]?values as e> 
-		            		<#if type==e.value>
-			            		<option value="${e.value}" selected="selected">${e.value}</option>
-			            	<#else>
-			            		<option value="${e.value}">${e.value}</option>
-			            	</#if>
-		            	</#list>
-		            </select>
-		            <select name="status">
-		            	<#if status == -99>
-		            		<option value="" selected="selected">请选择任务状态</option>
-		            	<#else>
-		            		<option value="">请选择任务状态</option>
-		            	</#if>
-		            	<#list enums["com.bimface.book.enums.bookStatus"]?values as e> 
-		            		<#if status==e.value>
+		            	<#list enums["com.train.bookshop.enums.BookType"]?values as e> 
+		            		<#if type==e.getName()>
 			            		<option value="${e.value}" selected="selected">${e.getName()}</option>
 			            	<#else>
 			            		<option value="${e.value}">${e.getName()}</option>
@@ -62,95 +48,32 @@
 		    	<table class="table-list">
 		    		<tr>
 		    			<th><input id="cb_all" type="checkbox" value="all" /></th>
-		    			<th>任务ID</th>
-		    			<th style="width:30%">任务源ID</th>
-		    			<th>任务类型</th>
-		    			<th>任务状态</th>
-		    			<th>执行机器 IP</th>
-		    			<th>总耗时（秒）</th>
-		    			<th>创建时间</th>
-		    			<th>Callback</th>
+		    			<th>图书ID</th>
+		    			<th style="width:10%">图书名称</th>
+		    			<th>图书类型</th>
+		    			<th>图书简介</th>
+		    			<th>图书价格</th>
+		    			<th>剩余数量</th>
 		    		</tr>
 		    		<#if list??>
 		    			<#list list as book>
 				    		<tr>
-				    			<td>
-				    				<#if book.status==enums["com.bimface.book.enums.bookStatus"].READY.value || book.status==enums["com.bimface.book.enums.bookStatus"].FAILED.value || book.status==enums["com.bimface.book.enums.bookStatus"].COMPLETE.value>
-				    					<#assign bookCanRestart="true">
-			    					<#else>
-			    						<#assign bookCanRestart="false">
-				    				</#if>
-				    				<#if book.status==enums["com.bimface.book.enums.bookStatus"].QUEUE.value>
-				    					<#assign bookCanDequeue="true">
-			    					<#else>
-			    						<#assign bookCanDequeue="false">
-				    				</#if>
-				    				<#if book.status==enums["com.bimface.book.enums.bookStatus"].DEQUEUE.value>
-				    					<#assign bookCanenqueue="true">
-			    					<#else>
-			    						<#assign bookCanenqueue="false">
-				    				</#if>
-				    				<#if book.status==enums["com.bimface.book.enums.bookStatus"].READY.value || book.status==enums["com.bimface.book.enums.bookStatus"].FAILED.value || book.status==enums["com.bimface.book.enums.bookStatus"].COMPLETE.value>
-				    					<#assign bookCanDel="true">
-			    					<#else>
-			    						<#assign bookCanDel="false">
-				    				</#if>
-				    				<input type="checkbox" class="cb_single" id="cb_id_${book.id?c}" value="${book.id?c}" action-restart='${bookCanRestart!}' action-dequeue='${bookCanDequeue!}' action-enqueue='${bookCanenqueue!}' action-del='${bookCanDel!}' />
+				    		<td>
+				    				
+				    				<input type="checkbox" class="cb_single" id="cb_id_${book.id?c}" value="${book.id?c}"  action-add='true' action-del='true' />
 				    			</td>
 				    			<td><a href="book/${book.id?c}" target="_blank">${book.id?c}</a></td>
+				    			<td>${book.name!}</td>
 				    			<td>
-				    				${book.sourceId!}
-				    				<br />名称：${book.sourceName!}
-				    			</td>
-				    			<td>
-				    				<#list enums["com.bimface.book.enums.bookType"]?values as e> 
+				    				<#list enums["com.train.bookshop.enums.BookType"]?values as e> 
 										<#if e.value==book.type>
 											${e.value}
 										</#if>
 									</#list>
 				    			</td>
-				    			<td>
-				    				<#list enums["com.bimface.book.enums.bookStatus"]?values as e> 
-										<#if e.value==book.status>
-											<#if book.status==enums["com.bimface.book.enums.bookStatus"].FAILED.value>
-												<span style="color:red"">${e.getName()}</span>
-												<br />${book.code!}
-											<#elseif book.status==enums["com.bimface.book.enums.bookStatus"].COMPLETE.value>
-												<span class="font-success">${e.getName()}</span>
-											<#else>
-												${e.getName()}
-											</#if>
-										</#if>
-									</#list>
-				    			</td>
-				    			<td>${book.executeHost!}</td>
-				    			<td>
-				    				${book.executeCost!}
-				    				<#if book.executeCost??>
-										<br />
-										<a class="pop_btn" data="cost_${book.id?c}">明细</a>
-										<div class="remodal" data-remodal-id="cost_${book.id?c}">
-											<button data-remodal-action="close" class="remodal-close"></button>
-											<table class="table-list" id="table_cost_${book.id?c}"></table>
-											<button data-remodal-action="confirm" class="remodal-confirm">我知道了</button>
-										</div>
-									</#if>
-				    			</td>
-				    			<td>
-				    				<#if book.createTime??>
-				    					${classMap.relativeDateFormat.format(book.createTime)}
-				    				</#if>
-				    			</td>
-				    			<td>
-				    				<#if book.callbackStatus??>
-				    					<#if book.callbackStatus==200>
-											<span class="font-success">${book.callbackStatus!}</span>
-										</#if>
-										<#if book.callbackStatus!=200>
-											<span class="font-failed">${book.callbackStatus!} / ${book.callbackTimes!}</span>
-										</#if>
-				    				</#if>
-				    			</td>
+				    			<td>${book.summary!}</td>
+				    			<td>${book.price!}</td>
+				    			<td>${book.count!}</td>				    			
 				    		</tr>
 			    		</#list>
 		    		</#if>

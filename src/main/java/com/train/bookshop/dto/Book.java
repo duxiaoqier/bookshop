@@ -5,9 +5,13 @@ public class Book {
 
     private String name;
 
+    private Byte type;
+
     private String summary;
 
     private Integer price;
+
+    private Integer count;
 
     public Long getId() {
         return id;
@@ -25,6 +29,14 @@ public class Book {
         this.name = name == null ? null : name.trim();
     }
 
+    public Byte getType() {
+        return type;
+    }
+
+    public void setType(Byte type) {
+        this.type = type;
+    }
+
     public String getSummary() {
         return summary;
     }
@@ -39,5 +51,13 @@ public class Book {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 }

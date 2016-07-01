@@ -4,11 +4,13 @@
   <resultMap id="BaseResultMap" type="com.train.bookshop.dto.Book" >
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
     <result column="summary" property="summary" jdbcType="VARCHAR" />
     <result column="price" property="price" jdbcType="INTEGER" />
+    <result column="count" property="count" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, summary, price
+    id, name, type, summary, price, count
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 'true' as QUERYID,
@@ -16,15 +18,32 @@
     from book
     where id = #{id,jdbcType=BIGINT}
   </select>
+  <select id="selectByConditions" resultMap="BaseResultMap" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from book
+    where 1=1 
+    <if test="id != null" >
+        and id=(#{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        and name=#{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        and type=#{type,jdbcType=TINYINT}
+      </if>
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from book
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.train.bookshop.dto.Book" >
-    insert into book (id, name, summary, 
-      price)
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, 
-      #{price,jdbcType=INTEGER})
+    insert into book (id, name, type, 
+      summary, price, count
+      )
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{summary,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, #{count,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.train.bookshop.dto.Book" >
     insert into book
@@ -35,11 +54,17 @@
       <if test="name != null" >
         name,
       </if>
+      <if test="type != null" >
+        type,
+      </if>
       <if test="summary != null" >
         summary,
       </if>
       <if test="price != null" >
         price,
+      </if>
+      <if test="count != null" >
+        count,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -49,11 +74,17 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
       <if test="summary != null" >
         #{summary,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
         #{price,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -63,11 +94,17 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
       <if test="summary != null" >
         summary = #{summary,jdbcType=VARCHAR},
       </if>
       <if test="price != null" >
         price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
@@ -75,8 +112,10 @@
   <update id="updateByPrimaryKey" parameterType="com.train.bookshop.dto.Book" >
     update book
     set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
       summary = #{summary,jdbcType=VARCHAR},
-      price = #{price,jdbcType=INTEGER}
+      price = #{price,jdbcType=INTEGER},
+      count = #{count,jdbcType=INTEGER}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

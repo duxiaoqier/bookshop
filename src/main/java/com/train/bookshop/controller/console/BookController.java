@@ -1,4 +1,6 @@
-package com.train.bookshop.controller;
+package com.train.bookshop.controller.console;
+
+import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.train.bookshop.bean.page.Page;
 import com.train.bookshop.bean.page.PagedList;
+import com.train.bookshop.controller.AbstractController;
 import com.train.bookshop.dto.Book;
 import com.train.bookshop.service.BookQueryService;
 
@@ -44,7 +47,7 @@ public class BookController extends AbstractController {
         // 查询条件回填
         model.addAttribute("pageNo", pageNo);
         model.addAttribute("id", id == null ? "" : id.toString());
-        model.addAttribute("name", name);
+        model.addAttribute("name", name == null ? "" : name);
         model.addAttribute("type", type == null ? "" : type);
 
         if (id == null || id <= 0) {
@@ -54,9 +57,10 @@ public class BookController extends AbstractController {
             name = null;
         }
         if (StringUtils.isBlank(type)) {
-            type = null;
+            type = "";
         }
-        PagedList<Book> pagedList = bookQueryService.queryByConditions(id, name, type);
+        List<Book> bookList = bookQueryService.queryByConditions(id, name, type);
+        PagedList<Book> pagedList = new PagedList<>(bookList, page);
         if (pagedList != null) {
             model.addAttribute("list", pagedList.getList());
             model.addAttribute("page", pagedList.getPage());

@@ -38,7 +38,7 @@ $(function() {
 		}
 		$.post("j_verify_login?loginName="+u+"&password="+p, function(data){
 			if(data.code == 'success') {
-				location.href = 'protect/book_list';
+				location.href = 'protect/console/book';
 			} else {
 				$(".error-tip").html(data.message);
 			}
