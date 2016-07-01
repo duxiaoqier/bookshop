@@ -1,7 +1,7 @@
 package com.train.bookshop.service;
 
-import java.util.List;
-
+import com.train.bookshop.bean.page.Page;
+import com.train.bookshop.bean.page.PagedList;
 import com.train.bookshop.dto.Book;
 
 /**
@@ -9,6 +9,6 @@ import com.train.bookshop.dto.Book;
  */
 public interface BookQueryService {
 
-    List<Book> queryByConditions(Long id, String name, String type);
+    PagedList<Book> queryByConditions(Long id, String name, Byte type, Page page);
 
 }

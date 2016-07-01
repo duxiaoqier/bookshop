@@ -1,7 +1,5 @@
 package com.train.bookshop.controller.console;
 
-import java.util.List;
-
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +14,7 @@ import com.train.bookshop.bean.page.Page;
 import com.train.bookshop.bean.page.PagedList;
 import com.train.bookshop.controller.AbstractController;
 import com.train.bookshop.dto.Book;
+import com.train.bookshop.enums.BookType;
 import com.train.bookshop.service.BookQueryService;
 
 /**
@@ -33,7 +32,7 @@ public class BookController extends AbstractController {
     @RequestMapping(value = "/book", method = RequestMethod.GET)
     public ModelAndView query(@RequestParam(value = "id", required = false) Long id,
                               @RequestParam(value = "name", required = false) String name,
-                              @RequestParam(value = "type", required = false) String type,
+                              @RequestParam(value = "type", required = false) Byte type,
                               @RequestParam(value = "page", required = false) String pageNoStr, ModelMap model) {
 
         supportEnum(model);
@@ -48,7 +47,7 @@ public class BookController extends AbstractController {
         model.addAttribute("pageNo", pageNo);
         model.addAttribute("id", id == null ? "" : id.toString());
         model.addAttribute("name", name == null ? "" : name);
-        model.addAttribute("type", type == null ? "" : type);
+        model.addAttribute("type", type == null ? BookType.ALL.getValue() : type);
 
         if (id == null || id <= 0) {
             id = null;
@@ -56,11 +55,11 @@ public class BookController extends AbstractController {
         if (StringUtils.isBlank(name)) {
             name = null;
         }
-        if (StringUtils.isBlank(type)) {
-            type = "";
+        if (type == null || BookType.ALL.getValue() == type.byteValue()) {
+            type = null;
         }
-        List<Book> bookList = bookQueryService.queryByConditions(id, name, type);
-        PagedList<Book> pagedList = new PagedList<>(bookList, page);
+
+        PagedList<Book> pagedList = bookQueryService.queryByConditions(id, name, type, page);
         if (pagedList != null) {
             model.addAttribute("list", pagedList.getList());
             model.addAttribute("page", pagedList.getPage());

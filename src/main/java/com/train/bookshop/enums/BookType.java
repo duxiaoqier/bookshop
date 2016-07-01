@@ -2,11 +2,13 @@ package com.train.bookshop.enums;
 
 public enum BookType {
 
-    COMPUTER((byte) 1, "computer"),
+    PROGRAM((byte) 1, "编程图书"),
 
-    TOOLS((byte) 2, "tools"),
+    TOOLS((byte) 2, "工具书"),
 
-    NOVEL((byte) 3, "novel");
+    NOVEL((byte) 3, "小说"),
+
+    ALL((byte) -99, "全部种类");
 
     private byte value;
     private String name;

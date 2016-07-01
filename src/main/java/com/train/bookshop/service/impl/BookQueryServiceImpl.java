@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+import com.train.bookshop.bean.page.Page;
+import com.train.bookshop.bean.page.PagedList;
 import com.train.bookshop.dao.mapper.BookMapper;
 import com.train.bookshop.dto.Book;
-import com.train.bookshop.enums.BookType;
 import com.train.bookshop.service.BookQueryService;
 
 @Service("bookQueryService")
@@ -17,14 +19,13 @@ public class BookQueryServiceImpl implements BookQueryService {
     private BookMapper bookMapper;
 
     @Override
-    public List<Book> queryByConditions(Long id, String name, String type) {
-        Byte bookTypeByte;
-        if (BookType.of(type) == null) {
-            bookTypeByte = null;
-        } else {
-            bookTypeByte = BookType.valueOf(type).getValue();
-        }
-        return bookMapper.selectByConditions(id, name, bookTypeByte);
+    public PagedList<Book> queryByConditions(Long id, String name, Byte type, Page page) {
+        Assert.notNull(page, "page must not be null.");
+
+        List<Book> list = bookMapper.selectByConditions(id, name, type);
+        page.setTotalCount(list.size());
+
+        return new PagedList<Book>(list, page);
     }
 
 }

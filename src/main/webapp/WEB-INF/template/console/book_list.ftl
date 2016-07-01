@@ -21,16 +21,12 @@
 		<div class="detail">
 	    	<fieldset class="filter">
 	    		<form id="form-search" action="book" method="get">
-		            <input type="text" name="bookId" value="${bookId!}" placeholder="请输入图书ID" style="width:200px">
+		            <input type="text" name="id" value="${id!}" placeholder="请输入图书ID" style="width:200px">
 		            <input type="text" name="name" value="${name!}" placeholder="请输入图书名称" style="width:200px">
 		            <select name="type">
-		            	<#if type == ''>
-		            		<option value="" selected="selected">请选择图书类型</option>
-		            	<#else>
-		            		<option value="">请选择图书类型</option>
-		            	</#if>
+
 		            	<#list enums["com.train.bookshop.enums.BookType"]?values as e> 
-		            		<#if type==e.getName()>
+		            		<#if type==e.value>
 			            		<option value="${e.value}" selected="selected">${e.getName()}</option>
 			            	<#else>
 			            		<option value="${e.value}">${e.getName()}</option>
@@ -58,8 +54,7 @@
 		    		<#if list??>
 		    			<#list list as book>
 				    		<tr>
-				    		<td>
-				    				
+				    			<td>
 				    				<input type="checkbox" class="cb_single" id="cb_id_${book.id?c}" value="${book.id?c}"  action-add='true' action-del='true' />
 				    			</td>
 				    			<td><a href="book/${book.id?c}" target="_blank">${book.id?c}</a></td>
@@ -72,14 +67,14 @@
 									</#list>
 				    			</td>
 				    			<td>${book.summary!}</td>
-				    			<td>${book.price!}</td>
+				    			<td>${book.price/100!}</td>
 				    			<td>${book.count!}</td>				    			
 				    		</tr>
 			    		</#list>
 		    		</#if>
 		    	</table>
 		    	<div class="tools-bar">
-		    		<a id="btn-add" can-do="false"><span class="tool-disable">增加</span></a>
+		    		<a href="book/add" id="btn-add" can-do="true"><span>增加</span></a>
 		    		<a id="btn-del" can-do="false"><span class="tool-disable">删除</span></a>
 		    		<span class="error-msg"></span>
 		    	</div>
@@ -95,46 +90,17 @@
 </div>
 <script>
 $(function () {
-	$('.pop_btn').click(function(){
-		
-		// 如果是明细
-		var dataId = $(this).attr('data');
-		var bookId = dataId.substring(dataId.indexOf('_')+1, dataId.lenth);
-		
-		var tableEle = $('#table_cost_' + bookId);
-		tableEle.html('<tr><th>阶段</th><th>耗时（秒）</th></tr>');
-		
-		// Ajax请求
-		$.get('book/step?bookId=' + bookId, function(result) {
-			if(result.code == 'success') {
-				$.each(result.data, function(key, value) {
-					tableEle.append('<tr><td>'+key+'</td><td>'+value+'</td></tr>');
-				});
-			}
-		});
-		
-		// pop up
-		var inst = $('[data-remodal-id='+dataId+']').remodal();
-		inst.open();
-	});
-	
 	// 全选
 	$("#cb_all").click(function() {
 		$(".cb_single").each(function() {
 			$(this).prop("checked",!!$("#cb_all").prop("checked"));
 		});
-		showTools('action-restart', $('#btn-restart'));
-		showTools('action-dequeue', $('#btn-dequeue'));
-		showTools('action-enqueue', $('#btn-enqueue'));
 		showTools('action-del', $('#btn-del'));
 	});
 	$(".cb_single").click(function() {
 		if(!$(this).prop("checked")) {
 			$("#cb_all").prop("checked", false);
 		}
-		showTools('action-restart', $('#btn-restart'));
-		showTools('action-dequeue', $('#btn-dequeue'));
-		showTools('action-enqueue', $('#btn-enqueue'));
 		showTools('action-del', $('#btn-del'));
 	});
 	

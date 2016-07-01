@@ -24,10 +24,10 @@
     from book
     where 1=1 
     <if test="id != null" >
-        and id=(#{id,jdbcType=BIGINT},
+        and id=#{id,jdbcType=BIGINT}
       </if>
       <if test="name != null" >
-        and name=#{name,jdbcType=VARCHAR},
+        and name=#{name,jdbcType=VARCHAR}
       </if>
       <if test="type != null" >
         and type=#{type,jdbcType=TINYINT}
