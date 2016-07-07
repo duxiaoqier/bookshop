@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.train.bookshop.dto.LoginManager;
+import com.train.bookshop.filter.bean.LoginManagerHolder;
 
 @Service("loginFilter")
 public class LoginFilter extends GenericFilterBean {
@@ -37,6 +38,7 @@ public class LoginFilter extends GenericFilterBean {
 
         HttpSession session = httpReq.getSession();
         LoginManager loginManager = (LoginManager) session.getAttribute(LOGIN_SEESION_USER_INFO);
+        LoginManagerHolder.getLoginManager();
         if (loginManager != null) {
             logger.debug("doFilter... is login:" + loginManager);
             chain.doFilter(request, response);

@@ -19,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import com.train.bookshop.dto.GeneralResponse;
 import com.train.bookshop.dto.LoginManager;
 import com.train.bookshop.dto.ManagerEntity;
+import com.train.bookshop.filter.bean.LoginManagerHolder;
 import com.train.bookshop.service.ManagerService;
 
 @Controller
@@ -50,6 +51,7 @@ public class LoginController {
         // 密码验证成功后，把用户(user)信息存入session
         request.getSession().setAttribute(LOGIN_SEESION_USER_INFO, loginManager);
         response.addHeader("Set-Cookie", "JSESSIONID=" + request.getSession().getId() + "; Path=/; HttpOnly");
+        LoginManagerHolder.setLoginManager(loginManager);
         return new GeneralResponse<LoginManager>(loginManager);
     }
 

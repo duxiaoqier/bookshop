@@ -34,7 +34,7 @@
                              type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="book" domainObjectName="Book"
+        <table tableName="shop_cart" domainObjectName="ShopCart"
                enableInsert="true"
                enableSelectByPrimaryKey="true"
                enableSelectByExample="false"

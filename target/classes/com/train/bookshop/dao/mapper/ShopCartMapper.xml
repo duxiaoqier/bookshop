@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.train.bookshop.dao.mapper.ShopCartMapper" >
+  <resultMap id="BaseResultMap" type="com.train.bookshop.dto.ShopCart" >
+    <result column="cart_id" property="cartId" jdbcType="VARCHAR" />
+    <result column="book_id" property="bookId" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cart_id, book_id, count
+  </sql>
+  <insert id="insert" parameterType="com.train.bookshop.dto.ShopCart" >
+    insert into shop_cart (cart_id, book_id, count
+      )
+    values (#{cartId,jdbcType=VARCHAR}, #{bookId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}
+      )
+  </insert>
+<select id="selectByCartId" resultMap="BaseResultMap">
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where cart_id=#{cartId,jdbcType=VARCHAR}
+  </select>
+<select id="selectByConditions" resultMap="BaseResultMap" >
+    select 'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from shop_cart
+    where 1=1 
+    <if test="cartId != null" >
+        and cart_id=#{cartId,jdbcType=VARCHAR}
+    </if>
+    <if test="bookId != null" >
+        and book_id=#{bookId,jdbcType=BIGINT}
+    </if>
+  </select>
+  <update id="update" parameterType="com.train.bookshop.dto.Book" >
+    update shop_cart
+    set count = #{count,jdbcType=INTEGER}
+    where cart_id=#{cartId,jdbcType=VARCHAR} and book_id=#{bookId,jdbcType=BIGINT}
+  </update>
+    <delete id="deleteByConditions" >
+    delete from shop_cart
+    where cart_id=#{cartId,jdbcType=VARCHAR} and book_id=#{bookId,jdbcType=BIGINT}
+  </delete>
+</mapper>

@@ -1,5 +1,5 @@
 <#import "/macro/header.ftl" as h>
-<#import "/macro/menu.ftl" as m>
+<#import "/macro/menu_shop.ftl" as m>
 <#import "/macro/page.ftl" as p>
 <#import "/macro/staticImport.ftl" as s>
 <!DOCTYPE html>
@@ -44,7 +44,6 @@
 		    	<table class="table-list">
 		    		<tr>
 		    			<th><input id="cb_all" type="checkbox" value="all" /></th>
-		    			<th>图书ID(点击更新)</th>
 		    			<th style="width:10%">图书名称</th>
 		    			<th>图书类型</th>
 		    			<th>图书简介</th>
@@ -57,7 +56,6 @@
 				    			<td>
 				    				<input type="checkbox" class="cb_single" id="cb_id_${book.id?c}" value="${book.id?c}"  action-add='true' action-del='true' />
 				    			</td>
-				    			<td><a href="book/${book.id?c}" target="_blank">${book.id?c}</a></td>
 				    			<td>${book.name!}</td>
 				    			<td>
 				    				<#list enums["com.train.bookshop.enums.BookType"]?values as e> 
@@ -74,8 +72,8 @@
 		    		</#if>
 		    	</table>
 		    	<div class="tools-bar">
-		    		<a href="book/insert" id="btn-add" can-do="true"><span>增加</span></a>
-		    		<a id="btn-del" can-do="false"><span class="tool-disable">删除</span></a>
+		    		<a id="btn-buy" can-do="false"><span class="tool-disable">快速购买</span></a>
+		    		<a id="btn-add" can-do="false"><span class="tool-disable">加入购物车</span></a>
 		    		<span class="error-msg"></span>
 		    	</div>
 		    	<div class="remodal" data-remodal-id="tool-confirm">
@@ -95,22 +93,42 @@ $(function () {
 		$(".cb_single").each(function() {
 			$(this).prop("checked",!!$("#cb_all").prop("checked"));
 		});
-		showTools('action-del', $('#btn-del'));
+		showTools('action-add', $('#btn-add'));
 	});
 	$(".cb_single").click(function() {
 		if(!$(this).prop("checked")) {
 			$("#cb_all").prop("checked", false);
 		}
-		showTools('action-del', $('#btn-del'));
+		showTools('action-add', $('#btn-add'));
 	});
 	
-	// 批量删除
-	$("#btn-del").click(function() {
+	// 批量加入购物车
+	$("#btn-add").click(function() {
 		if($(this).attr("can-do")=='true') {
-			if(confirm("确定要删除吗？")) {
+			if(confirm("确定要加入购物车吗？")) {
 				$.ajax({
-					url: 'book/delete?ids=' + getCheckedValue(),
-					type: 'DELETE',
+					url: 'book/add?ids=' + getCheckedValue(),
+					type: 'POST',
+					async: false,
+					success: function(result) {
+						if(result == 'ok') {
+							$("#form-search").submit();
+						} else {
+							alert("失败："+result);
+						}
+					}
+				});
+			}
+		}
+	});
+	
+	// 批量直接购买
+	$("#btn-buy").click(function() {
+		if($(this).attr("can-do")=='true') {
+			if(confirm("确定要直接购买吗？")) {
+				$.ajax({
+					url: 'book/buy?ids=' + getCheckedValue(),
+					type: 'GET',
 					async: false,
 					success: function(result) {
 						if(result == 'ok') {

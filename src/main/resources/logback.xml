@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="120 seconds" debug="true">
 
-	<property name="PROJECT_NAME" value="bfbops" />
+	<property name="PROJECT_NAME" value="bookshop" />
 	<property name="PAAS_LOG_DIR" value="/data/logs/paas" />
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
@@ -25,9 +25,9 @@
 		</rollingPolicy>
 	</appender>
 
-	<logger name="com.bimface.bops" level="INFO" />
+	<logger name="com.train.bookshop" level="INFO" />
 
-	<root level="WARN">
+	<root level="INFO">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
 	</root>

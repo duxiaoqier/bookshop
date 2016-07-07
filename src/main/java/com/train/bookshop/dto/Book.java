@@ -1,6 +1,7 @@
 package com.train.bookshop.dto;
 
 public class Book {
+
     private Long id;
 
     private String name;
@@ -60,4 +61,11 @@ public class Book {
     public void setCount(Integer count) {
         this.count = count;
     }
+
+    @Override
+    public String toString() {
+        return "Book [id=" + id + ", name=" + name + ", type=" + type + ", summary=" + summary + ", price=" + price
+               + ", count=" + count + "]";
+    }
+
 }
